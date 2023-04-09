@@ -1,0 +1,30 @@
+{
+  "name": "json-auto-form",
+  "version": "1.0.0",
+  "description": "React component to explore (next version will edit) JSON object",
+  "main": "index.js",
+  "scripts": {
+    "test": "testCommandTODO"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andrey153/json-auto-form.git"
+  },
+  "keywords": [
+    "json",
+    "auto",
+    "form",
+    "view",
+    "gui",
+    "react",
+    "component",
+    "cards",
+    "tables"
+  ],
+  "author": "Andrey Vyalkov vyalkov.a@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Andrey153/json-auto-form/issues"
+  },
+  "homepage": "https://github.com/Andrey153/json-auto-form#readme"
+}
