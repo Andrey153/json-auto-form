@@ -46,6 +46,7 @@ export function isFilteredObjectRecursive(
           childrenLevel + 1,
           maxChildrenLevel
         );
+      return false;
     });
   }
   if (typeValue === "JSONArray") {

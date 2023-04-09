@@ -1,0 +1,173 @@
+{
+  "company": {
+    "name": "Acme Corporation",
+    "founded": "2000",
+    "address": {
+      "street": "123 Main St",
+      "city": "Anytown",
+      "state": "CA",
+      "zip": "12345"
+    },
+    "phone": "555-123-4567",
+    "employees": [
+      {
+        "name": "John Smith",
+        "age": 35,
+        "email": "john.smith@example.com",
+        "hobbies": ["reading", "hiking", "playing guitar"],
+        "position": "Software Engineer",
+        "salary": 100000,
+        "start_date": "2018-05-15",
+        "performance_review": {
+          "date": "2023-03-31",
+          "score": 4.5,
+          "comments": "John has been an outstanding employee and consistently delivers high-quality work."
+        }
+      },
+      {
+        "name": "Jane Doe",
+        "age": 27,
+        "email": "jane.doe@example.com",
+        "hobbies": ["painting", "running", "watching movies"],
+        "position": "Graphic Designer",
+        "salary": 75000,
+        "start_date": "2020-01-01",
+        "performance_review": {
+          "date": "2023-03-31",
+          "score": 3.8,
+          "comments": "Jane has shown improvement in her design skills and is always willing to help out her colleagues."
+        }
+      },
+      {
+        "name": "John Smith",
+        "age": 35,
+        "email": "john.smith@example.com",
+        "hobbies": ["reading", "hiking", "playing guitar"],
+        "position": "Software Engineer",
+        "salary": 100000,
+        "start_date": "2018-05-15",
+        "performance_review": {
+          "date": "2023-03-31",
+          "score": 4.5,
+          "comments": "John has been an outstanding employee and consistently delivers high-quality work."
+        }
+      },
+      {
+        "name": "Jane Doe",
+        "age": 27,
+        "email": "jane.doe@example.com",
+        "hobbies": ["painting", "running", "watching movies"],
+        "position": "Graphic Designer",
+        "salary": 75000,
+        "start_date": "2020-01-01",
+        "performance_review": {
+          "date": "2023-03-31",
+          "score": 3.8,
+          "comments": "Jane has shown improvement in her design skills and is always willing to help out her colleagues."
+        }
+      },
+      {
+        "name": "Bob Johnson",
+        "age": 42,
+        "email": "bob.johnson@example.com",
+        "hobbies": ["golfing", "cooking", "traveling"],
+        "position": "Sales Manager",
+        "salary": 120000,
+        "start_date": "2017-09-01",
+        "performance_review": {
+          "date": "2023-03-31",
+          "score": 4.2,
+          "comments": "Bob consistently exceeds his sales targets and is a valuable member of the team."
+        }
+      },
+      {
+        "name": "Sarah Lee",
+        "age": 29,
+        "email": "sarah.lee@example.com",
+        "hobbies": ["yoga", "baking", "reading"],
+        "position": "Marketing Specialist",
+        "salary": 85000,
+        "start_date": "2021-02-15",
+        "performance_review": {
+          "date": "2023-03-31",
+          "score": 4.0,
+          "comments": "Sarah has brought a fresh perspective to our marketing efforts and has been instrumental in several successful campaigns."
+        }
+      },
+      {
+        "name": "Michael Brown",
+        "age": 45,
+        "email": "michael.brown@example.com",
+        "hobbies": ["fishing", "gardening", "woodworking"],
+        "position": "Operations Manager",
+        "salary": 110000,
+        "start_date": "2015-03-01",
+        "performance_review": {
+          "date": "2023-03-31",
+          "score": 4.8,
+          "comments": "Michael is an excellent manager and has streamlined our operations to be more efficient and cost-effective."
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "Widget A",
+        "price": 9.99,
+        "description": "A useful widget for everyday tasks",
+        "in_stock": true,
+        "reviews": [
+          {
+            "author": "John Smith",
+            "rating": 4,
+            "comment": "Great widget, highly recommend!"
+          },
+          {
+            "author": "Jane Doe",
+            "rating": 3,
+            "comment": "It's okay, but not the best widget out there"
+          }
+        ]
+      },
+      {
+        "name": "Widget B",
+        "price": 14.99,
+        "description": "A powerful widget for advanced users",
+        "in_stock": false,
+        "reviews": []
+      }
+    ],
+    "customers": [
+      {
+        "name": "Bob Johnson",
+        "email": "bob.johnson@example.com",
+        "orders": [
+          {
+            "product_name": "Widget A",
+            "quantity": 2,
+            "order_date": "2022-10-15",
+            "status": "shipped"
+          },
+          {
+            "product_name": "Widget B",
+            "quantity": 1,
+            "order_date": "2023-01-20",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "name": "Alice Chen",
+        "email": "alice.chen@example.com",
+        "orders": [
+          {
+            "product_name": "Widget A",
+            "quantity": 3,
+            "order_date": "2023-03-01",
+            "status": "delivered"
+          }
+        ]
+      }
+    ]
+  },
+  "last_updated": "2023-04-09"
+}
