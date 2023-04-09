@@ -2,7 +2,7 @@
   "name": "json-auto-form",
   "version": "1.0.0",
   "description": "React component to explore (next version will edit) JSON object",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "testCommandTODO"
   },
