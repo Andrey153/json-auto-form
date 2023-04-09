@@ -1,6 +1,6 @@
 {
   "name": "json-auto-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React component to explore (next version will edit) JSON object",
   "main": "index.ts",
   "scripts": {
