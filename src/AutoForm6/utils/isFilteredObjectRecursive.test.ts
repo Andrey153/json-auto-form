@@ -29,17 +29,17 @@ describe("isFilteredObjectRecursive", () => {
 
   it("should return false when childrenLevel exceeds maxChildrenLevel", () => {
     const obj = { a: { b: { c: "hello" } } };
-    expect(isFilteredObjectRecursive(obj, "he", true, false, 0, 2)).toBe(false);
+    expect(isFilteredObjectRecursive(obj, "he", false, true, 0, 2)).toBe(false);
   });
 
   it("should return false when childrenLevel exceeds maxChildrenLevel 1", () => {
     const obj = { a: { b: "hello" } };
-    expect(isFilteredObjectRecursive(obj, "he", true, false, 0, 1)).toBe(false);
+    expect(isFilteredObjectRecursive(obj, "he", false, true, 0, 1)).toBe(false);
   });
 
   it("should return false when childrenLevel exceeds maxChildrenLevel 1", () => {
     const obj = { a: "hello" };
-    expect(isFilteredObjectRecursive(obj, "he", true, false, 0, 1)).toBe(true);
+    expect(isFilteredObjectRecursive(obj, "he", false, true, 0, 1)).toBe(true);
   });
 
   it("should return true when searchText matches a null value", () => {

@@ -6,7 +6,7 @@ import { JSONValue } from "../../types/JSONTypes";
 import { ColumnDescription } from "../../utils/getColumnsDescription";
 import { getJsonType } from "../../utils/getJsonType";
 import { getChildrenObjectByPath } from "../../utils/utils";
-import { coefficientSymbolWidth, paddingInnerElements } from "./AutoTable";
+import { coefficientSymbolWidth, paddingInnerElements } from "./constants";
 
 const maxStringLength = 200;
 

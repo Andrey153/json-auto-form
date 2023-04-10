@@ -1,5 +1,9 @@
+// MIT License
+// Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
+// https://github.com/Andrey153/json-auto-form
+
 // AutoTable
-import { useState } from "react";
+import React, { useState } from "react";
 import { Path } from "../../types/autoFormPropsType";
 import { JSONArray, JSONValue } from "../../types/JSONTypes";
 import {
@@ -9,16 +13,7 @@ import {
 import { BooleanInput } from "../BooleanInput/BooleanInput";
 import { SetLevel } from "../SetLevel/SetLevel";
 import { AutoTableCell } from "./AutoTableCell";
-
-// const maxNumberOfColumns = 20; // todo
-const pageSizeCoefficient = 1;
-
-export const coefficientSymbolWidth = 9;
-// MIT License
-// Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
-// https://github.com/Andrey153/json-auto-form
-
-export const paddingInnerElements = 16;
+import { coefficientSymbolWidth, paddingInnerElements, pageSizeCoefficient } from "./constants";
 
 interface AutoTableInterface {
   inValue: JSONArray;

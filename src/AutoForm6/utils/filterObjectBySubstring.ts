@@ -75,8 +75,8 @@ export function filterObjectBySubstring(
           childrenLevel + 1,
           maxChildrenLevel
         );
-        if (Object.keys(newObject).length > 0) {
-          result[key] = newObject.filteredValue || {};
+        if (newObject?.filteredValue && Object.keys(newObject?.filteredValue).length > 0) {
+          result[key] = newObject.filteredValue;
           originalIndex[key] = newObject.originalIndex || [];
         }
       }

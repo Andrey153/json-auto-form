@@ -25,7 +25,10 @@ describe("filterObjectBySubstring", () => {
       hobbies: ["reading", "swimming", "running"],
     };
 
-    expect(filterObjectBySubstring(input, "test")).toEqual({});
+    expect(filterObjectBySubstring(input, "test")).toEqual({
+      filteredValue: {},
+      originalIndex: {},
+    });
   });
 
   test("should filter object by value substring search", () => {
@@ -41,14 +44,20 @@ describe("filterObjectBySubstring", () => {
     };
 
     const expectedOutput = {
-      name: "John",
-      address: {
-        city: "New York",
-        state: "NY",
+      filteredValue: {
+        name: "John",
+        address: {
+          city: "New York",
+          state: "NY",
+        },
+        hobbies: ["reading", "running"],
       },
-      hobbies: ["reading", "running"],
+      originalIndex: {
+        address: {},
+        hobbies: [0, 2],
+      },
     };
-    const result = filterObjectBySubstring(input, "n");
+    const result = filterObjectBySubstring(input, "n", false, true);
     expect(result).toEqual(expectedOutput);
   });
 
@@ -65,10 +74,13 @@ describe("filterObjectBySubstring", () => {
     };
 
     const expectedOutput = {
-      name: "John",
+      filteredValue: {
+        name: "John",
+      },
+      originalIndex: {},
     };
 
-    expect(filterObjectBySubstring(input, "name", false, true)).toEqual(
+    expect(filterObjectBySubstring(input, "name", true, false)).toEqual(
       expectedOutput
     );
   });
@@ -88,10 +100,17 @@ describe("filterObjectBySubstring", () => {
     };
 
     const expectedOutput = {
-      age: 30,
-      address: {
-        zip: "10001",
-        phones: ["123-456-7890"],
+      filteredValue: {
+        age: 30,
+        address: {
+          zip: "10001",
+          phones: ["123-456-7890"],
+        },
+      },
+      originalIndex: {
+        address: {
+          phones: [0],
+        },
       },
     };
 
@@ -100,7 +119,10 @@ describe("filterObjectBySubstring", () => {
 
   test("should filter array by value with sub children substring search", () => {
     const input: JSONArray = [{ a: { b: { c: "b" } } }, { z: "y" }, "abc"];
-    const expectedOutput = [{ a: { b: { c: "b" } } }, "abc"];
+    const expectedOutput = {
+      filteredValue: [{ a: { b: { c: "b" } } }, "abc"],
+      originalIndex: [0, 2],
+    };
     const result = filterObjectBySubstring(input, "b");
     expect(result).toEqual(expectedOutput);
   });
