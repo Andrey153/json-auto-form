@@ -84,7 +84,7 @@
 }
 
 .frame1059-auto-form6-header {
-  /* width: 100%; */
+  width: 100%;
   flex-grow: 0;
   /* flex: 0 0 auto; */
   /* position: absolute;
@@ -238,7 +238,7 @@
   background-color: var(--frame1059-auto-form6-color-2);
   padding: 12px;
 
-  /* width: 100%; */
+  width: 100%;
 
   display: flex;
   flex-direction: row;
@@ -255,7 +255,7 @@
   background-color: var(--frame1059-auto-form6-color-2);
   padding: 12px;
 
-  /* width: 100%; */
+  width: 100%;
 
   display: flex;
   flex-direction: row;
@@ -567,7 +567,7 @@
   background-color: var(--frame1059-auto-form6-color-4);
   padding: 12px;
 
-  /* width: 100%; */
+  width: 100%;
 }
 
 .frame1059-auto-form6-card-item-object:hover {
@@ -580,7 +580,7 @@
   background-color: var(--frame1059-auto-form6-color-4);
   padding: 12px;
 
-  /* width: 100%; */
+  width: 100%;
 
   display: flex;
   flex-direction: row;

@@ -10,7 +10,7 @@ import { BooleanInput } from "../BooleanInput/BooleanInput";
 import { SetLevel } from "../SetLevel/SetLevel";
 import { AutoTableCell } from "./AutoTableCell";
 
-// const maxNumberOfColumns = 20; // todo
+const maxNumberOfColumns = 20;
 const pageSizeCoefficient = 1;
 
 export const coefficientSymbolWidth = 9;

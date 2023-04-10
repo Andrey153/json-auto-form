@@ -44,6 +44,7 @@ export function MenuRecursive({
               >
                 {key}
               </div>
+              {/* <>{MenuRecursive(val, path, level + 1, maxLevel, setPath)}</> */}
               <div className="frame1059-auto-form6-menu-submenu">
                 <MenuRecursive
                   inValue={val}
@@ -65,6 +66,7 @@ export function MenuRecursive({
             >
               <div
                 className="frame1059-auto-form6-menu-item-array"
+                //   key={key}
                 onClick={() => setPath(path)}
               >
                 {key}...
@@ -134,6 +136,7 @@ export function MenuElementRecursive({
           " " +
           getLevelClass(level)
         }
+        // key={key}
         onClick={() => {
           // setUnfoldSubMenu(!unfoldSubMenu);
           setPath(path);
@@ -155,6 +158,7 @@ export function MenuElementRecursive({
           </div>
         )}
       </div>
+      {/* <>{MenuRecursive(val, path, level + 1, maxLevel, setPath)}</> */}
       {isSubItemsPresent && unfoldSubMenuCheck && (
         <div className="frame1059-auto-form6-menu-submenu">
           {Object.entries(inValue as JSONObject).map(([key, val]) => {
@@ -189,6 +193,7 @@ export function MenuElementRecursive({
                   key={key}
                   onClick={() => setPath([...path, key])}
                 >
+                  {/* {getLevelPrefix(level + 1)} */}
                   <div className="frame1059-auto-form6-menu-item-array-label">
                     {key}
                   </div>
@@ -201,10 +206,28 @@ export function MenuElementRecursive({
 
             return null;
           })}
+
+          {/* <MenuRecursive
+          inValue={val}
+          relativePath={path}
+          level={level + 1}
+          maxLevel={maxLevel}
+          setPath={setPath}
+        /> */}
         </div>
       )}
     </div>
   );
+}
+
+function getLevelPrefix(level: Number): string {
+  if (level === 0) return "";
+  if (level === 1) return ".";
+  if (level === 2) return "..";
+  if (level === 3) return "...";
+  if (level === 4) return "....";
+
+  return ".....";
 }
 
 function getLevelClass(level: Number): string {
@@ -213,5 +236,6 @@ function getLevelClass(level: Number): string {
   if (level === 2) return "frame1059-auto-form6-menu-item-object-level-2";
   if (level === 3) return "frame1059-auto-form6-menu-item-object-level-3";
   if (level === 4) return "frame1059-auto-form6-menu-item-object-level-4";
+
   return "frame1059-auto-form6-menu-item-object-level-5";
 }
