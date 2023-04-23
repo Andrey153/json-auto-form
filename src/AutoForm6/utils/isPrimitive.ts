@@ -5,27 +5,19 @@
 // todo check may be replace to isPrimitiveValue
 export function isPrimitive(typeOfValue: string) {
   return (
-    typeOfValue === "string" ||
-    typeOfValue === "number" ||
-    typeOfValue === "boolean" ||
-    typeOfValue === "null"
-  );
+    typeOfValue === 'string' ||
+    typeOfValue === 'number' ||
+    typeOfValue === 'boolean' ||
+    typeOfValue === 'null'
+  )
 }
 
 // todo why do use two similar function?
 export function isJsonPrimitive(typeOfValue: string) {
-  return (
-    typeOfValue === "string" ||
-    typeOfValue === "number" ||
-    typeOfValue === "boolean"
-  );
+  return typeOfValue === 'string' || typeOfValue === 'number' || typeOfValue === 'boolean'
 }
 
 export function isJsonPrimitiveValue(value: any) {
-  const typeOfValue = typeof value;
-  return (
-    typeOfValue === "string" ||
-    typeOfValue === "number" ||
-    typeOfValue === "boolean"
-  );
+  const typeOfValue = typeof value
+  return typeOfValue === 'string' || typeOfValue === 'number' || typeOfValue === 'boolean'
 }

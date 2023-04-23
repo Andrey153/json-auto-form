@@ -2,50 +2,41 @@
 // Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
 // https://github.com/Andrey153/json-auto-form
 
-import {
-  Menu,
-  Path,
-  AutoFormState,
-  Card,
-  Table,
-} from "../types/autoFormPropsType";
-import { JSONArray, JSONObject, JSONValue } from "../types/JSONTypes";
-import {
-  FilteredObjectType,
-  filterObjectBySubstring,
-} from "./filterObjectBySubstring";
-import { isPrimitive } from "./isPrimitive";
+import { AutoFormState, Card, Menu, Path, Table } from '../types/autoFormPropsType'
+import { JSONArray, JSONObject, JSONValue } from '../types/JSONTypes'
+import { FilteredObjectType, filterObjectBySubstring } from './filterObjectBySubstring'
+import { isPrimitive } from './isPrimitive'
 
 export function getChildrenObjectByPath({
   value,
   path,
 }: {
-  value: JSONValue;
-  path: Path;
+  value: JSONValue
+  path: Path
 }): JSONValue | undefined {
-  if (path.length === 0) return value;
-  if (typeof value !== "object") return undefined;
+  if (path.length === 0) return value
+  if (typeof value !== 'object') return undefined
 
-  let result = value as any;
+  let result = value as any
   for (const key of path) {
-    result = result?.[key];
+    result = result?.[key]
   }
-  return result;
+  return result
 }
 
 export function getMenuElementsByObject(value: JSONValue | undefined): Menu {
-  const result: Menu = { objKeys: [], arrayKeys: [] };
-  if (!value) return result;
+  const result: Menu = { objKeys: [], arrayKeys: [] }
+  if (!value) return result
 
   Object.entries(value).forEach(([key, val]) => {
-    const typeV = typeof val;
+    const typeV = typeof val
     if (Array.isArray(val)) {
-      result.arrayKeys.push(key);
-    } else if (typeV === "object" && val !== null) {
-      result.objKeys.push(key);
+      result.arrayKeys.push(key)
+    } else if (typeV === 'object' && val !== null) {
+      result.objKeys.push(key)
     }
-  });
-  return result;
+  })
+  return result
 }
 
 export function getAutoFormState(
@@ -55,31 +46,27 @@ export function getAutoFormState(
   keySearch: boolean,
   valueSearch: boolean,
   childrenNodeLevel: number,
-  maxTableChildrenLevel: number
+  maxTableChildrenLevel: number,
 ): AutoFormState {
-  let pathObject = getChildrenObjectByPath({ value, path: currentPath });
+  let pathObject = getChildrenObjectByPath({ value, path: currentPath })
 
-  let filteredObject: FilteredObjectType = { filteredValue: pathObject };
+  let filteredObject: FilteredObjectType = { filteredValue: pathObject }
 
-  if (
-    typeof pathObject === "object" &&
-    pathObject !== null &&
-    searchText.trim()
-  ) {
+  if (typeof pathObject === 'object' && pathObject !== null && searchText.trim()) {
     filteredObject = filterObjectBySubstring(
       pathObject,
       searchText.toLowerCase().trim(),
       keySearch,
-      valueSearch
-    );
-    pathObject = filteredObject.filteredValue;
+      valueSearch,
+    )
+    pathObject = filteredObject.filteredValue
   }
 
-  const currentMenu = getMenuElementsByObject(pathObject);
-  let cards: Card[] = [];
-  let tables: Table[] = [];
+  const currentMenu = getMenuElementsByObject(pathObject)
+  let cards: Card[] = []
+  let tables: Table[] = []
 
-  if (typeof pathObject === "object" && pathObject !== null) {
+  if (typeof pathObject === 'object' && pathObject !== null) {
     if (Array.isArray(pathObject)) {
       tables = [
         {
@@ -87,14 +74,14 @@ export function getAutoFormState(
           value: pathObject,
           originalIndex: filteredObject.originalIndex as number[],
         },
-      ];
+      ]
     } else {
       cards = [
         {
           relativePath: [],
           value: pathObject,
         },
-      ];
+      ]
       updateCardsAndTablesByChildrenRecursive(
         pathObject,
         filteredObject.originalIndex as JSONObject,
@@ -102,8 +89,8 @@ export function getAutoFormState(
         tables,
         [],
         0,
-        childrenNodeLevel
-      );
+        childrenNodeLevel,
+      )
     }
   }
 
@@ -118,9 +105,9 @@ export function getAutoFormState(
     currentMenu,
     cards,
     tables,
-  };
+  }
 
-  return newState;
+  return newState
 }
 function updateCardsAndTablesByChildrenRecursive(
   value: JSONObject | undefined | null,
@@ -129,26 +116,26 @@ function updateCardsAndTablesByChildrenRecursive(
   tables: Table[],
   relativePath: Path,
   level: number,
-  childrenNodeLevel: number
+  childrenNodeLevel: number,
 ) {
-  if (level >= childrenNodeLevel) return;
-  if (!value) return;
+  if (level >= childrenNodeLevel) return
+  if (!value) return
 
   Object.entries(value).forEach(([key, value]) => {
-    const typeV = typeof value;
+    const typeV = typeof value
     if (Array.isArray(value)) {
       tables.push({
         relativePath: [...relativePath, key],
         value: value as JSONArray,
         originalIndex: originalIndex?.[key] as number[],
-      });
-    } else if (typeV === "object" && value !== null) {
+      })
+    } else if (typeV === 'object' && value !== null) {
       // show cards only with primitive
       if (isPrimitivePresent(value as JSONObject)) {
         cards.push({
           relativePath: [...relativePath, key],
           value: value as JSONObject,
-        });
+        })
       }
       updateCardsAndTablesByChildrenRecursive(
         value as JSONObject,
@@ -157,14 +144,12 @@ function updateCardsAndTablesByChildrenRecursive(
         tables,
         [...relativePath, key],
         level + 1,
-        childrenNodeLevel
-      );
+        childrenNodeLevel,
+      )
     }
-  });
+  })
 }
 
 function isPrimitivePresent(value: JSONObject): boolean {
-  return !!Object.values(value).find((childrenValue) =>
-    isPrimitive(typeof childrenValue)
-  );
+  return !!Object.values(value).find((childrenValue) => isPrimitive(typeof childrenValue))
 }

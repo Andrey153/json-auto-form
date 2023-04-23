@@ -2,52 +2,48 @@
 // Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
 // https://github.com/Andrey153/json-auto-form
 
-import React, { useState, useEffect, CSSProperties } from "react";
-import { JSONObject, JSONValue } from "./types/JSONTypes";
-import { AutoFormState, Path } from "./types/autoFormPropsType";
-import { getAutoFormState } from "./utils/utils";
-import { AutoTable } from "./components/AutoTable/AutoTable";
-import { SetLevel } from "./components/SetLevel/SetLevel";
-import { MenuElementRecursive } from "./components/ObjectMenu/MenuRecursive";
-import { AutoTypeInput } from "./components/AutoTypeInput/AutoTypeInput";
-import { JSONTextView } from "./components/JSONTextView/JSONTextView";
-import { BooleanInput } from "./components/BooleanInput/BooleanInput";
-import { isPrimitive } from "./utils/isPrimitive";
+import './autoForm6.css'
+import './autoForm6-defaultDarkF1059AF6.css'
 
-import "./autoForm6.css";
-import "./autoForm6-defaultDarkF1059AF6.css";
+import React, { CSSProperties, useEffect, useState } from 'react'
+
+import { AutoTable } from './components/AutoTable/AutoTable'
+import { AutoTypeInput } from './components/AutoTypeInput/AutoTypeInput'
+import { BooleanInput } from './components/BooleanInput/BooleanInput'
+import { JSONTextView } from './components/JSONTextView/JSONTextView'
+import { MenuElementRecursive } from './components/ObjectMenu/MenuRecursive'
+import { SetLevel } from './components/SetLevel/SetLevel'
+import { AutoFormState, Path } from './types/autoFormPropsType'
+import { JSONObject, JSONValue } from './types/JSONTypes'
+import { isPrimitive } from './utils/isPrimitive'
+import { getAutoFormState } from './utils/utils'
 
 export interface AutoForm6Interface {
-  inValue: JSONValue;
-  path?: Path;
-  style?: CSSProperties;
-  themeId?: string; // if not defined used default with dark/light switcher,
+  inValue: JSONValue
+  path?: Path
+  style?: CSSProperties
+  themeId?: string // if not defined used default with dark/light switcher,
   //if provided then switcher hided and dark/light mode switch must be implemented in parent application
   //id "" and "defaultDarkF1059AF6" used for default theme
 }
 
-export function AutoForm6({
-  inValue,
-  path,
-  style,
-  themeId,
-}: AutoForm6Interface) {
-  let value = inValue as JSONObject;
+export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface) {
+  let value = inValue as JSONObject
   if (isPrimitive(typeof value)) {
-    value = { value: inValue };
+    value = { value: inValue }
   }
 
-  const [fullScreen, setFullScreen] = useState(false);
-  const [showMenu, setShowMenu] = useState(true);
-  const [tableWrap, setTableWrap] = useState(false);
+  const [fullScreen, setFullScreen] = useState(false)
+  const [showMenu, setShowMenu] = useState(true)
+  const [tableWrap, setTableWrap] = useState(false)
 
-  const [darkTheme, setDarkTheme] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(true)
 
-  const [showJsonText, setShowJsonText] = useState(false);
+  const [showJsonText, setShowJsonText] = useState(false)
 
   const [autoFormState, setAutoFormState] = useState<AutoFormState>({
-    currentPath: [],
-    searchText: "",
+    currentPath: path || [],
+    searchText: '',
     keySearch: true,
     valueSearch: true,
     childrenNodeLevel: 2,
@@ -58,7 +54,7 @@ export function AutoForm6({
     },
     cards: [],
     tables: [],
-  });
+  })
 
   useEffect(() => {
     const newState = getAutoFormState(
@@ -68,10 +64,10 @@ export function AutoForm6({
       autoFormState.keySearch,
       autoFormState.valueSearch,
       autoFormState.childrenNodeLevel,
-      autoFormState.maxTableChildrenLevel
-    );
-    setAutoFormState(newState);
-  }, [value]);
+      autoFormState.maxTableChildrenLevel,
+    )
+    setAutoFormState(newState)
+  }, [value])
 
   // const searchFilter = createSearchFilter(inValue, searchText);
 
@@ -83,12 +79,12 @@ export function AutoForm6({
     childrenNodeLevel,
     maxTableChildrenLevel,
   }: {
-    path?: Path;
-    searchText?: string;
-    keySearch?: boolean;
-    valueSearch?: boolean;
-    childrenNodeLevel?: number;
-    maxTableChildrenLevel?: number;
+    path?: Path
+    searchText?: string
+    keySearch?: boolean
+    valueSearch?: boolean
+    childrenNodeLevel?: number
+    maxTableChildrenLevel?: number
   }) {
     const newState = getAutoFormState(
       value as JSONObject,
@@ -96,23 +92,21 @@ export function AutoForm6({
       searchText === undefined ? autoFormState.searchText : searchText,
       keySearch === undefined ? autoFormState.keySearch : keySearch,
       valueSearch === undefined ? autoFormState.valueSearch : valueSearch,
-      childrenNodeLevel === undefined
-        ? autoFormState.childrenNodeLevel
-        : childrenNodeLevel,
+      childrenNodeLevel === undefined ? autoFormState.childrenNodeLevel : childrenNodeLevel,
       maxTableChildrenLevel === undefined
         ? autoFormState.maxTableChildrenLevel
-        : maxTableChildrenLevel
-    );
-    setAutoFormState(newState);
+        : maxTableChildrenLevel,
+    )
+    setAutoFormState(newState)
   }
 
   return (
     <div
       style={style}
       className={
-        (themeId ? themeId + " " : darkTheme ? "defaultDarkF1059AF6 " : "") +
-        "frame1059-auto-form6-root" +
-        (fullScreen ? " frame1059-auto-form6-root-full-screen" : "")
+        (themeId ? themeId + ' ' : darkTheme ? 'defaultDarkF1059AF6 ' : '') +
+        'frame1059-auto-form6-root' +
+        (fullScreen ? ' frame1059-auto-form6-root-full-screen' : '')
       }
     >
       {/* = */}
@@ -130,7 +124,7 @@ export function AutoForm6({
 
           <div
             className="frame1059-auto-form6-header-path-item"
-            key={"root"}
+            key={'root'}
             onClick={() => setCurrentInputParams({ path: [] })}
           >
             ...
@@ -145,7 +139,7 @@ export function AutoForm6({
                 })
               }
             >
-              {typeof key === "number" ? key + 1 : key}
+              {typeof key === 'number' ? key + 1 : key}
             </div>
           ))}
         </div>
@@ -154,37 +148,29 @@ export function AutoForm6({
             className="frame1059-auto-form6-search-input"
             value={autoFormState.searchText}
             onChange={(e) => {
-              setCurrentInputParams({ searchText: e.target.value });
+              setCurrentInputParams({ searchText: e.target.value })
             }}
           />
           <BooleanInput
             value={autoFormState.keySearch}
             labelTrue="key"
             labelFalse="key"
-            onValueChange={(value) =>
-              setCurrentInputParams({ keySearch: value })
-            }
+            onValueChange={(value) => setCurrentInputParams({ keySearch: value })}
           />
           <BooleanInput
             value={autoFormState.valueSearch}
             labelTrue="val"
             labelFalse="val"
-            onValueChange={(value) =>
-              setCurrentInputParams({ valueSearch: value })
-            }
+            onValueChange={(value) => setCurrentInputParams({ valueSearch: value })}
           />
 
           <SetLevel
             value={autoFormState.childrenNodeLevel}
-            changeValue={(value) =>
-              setCurrentInputParams({ childrenNodeLevel: value })
-            }
+            changeValue={(value) => setCurrentInputParams({ childrenNodeLevel: value })}
           />
           <SetLevel
             value={autoFormState.maxTableChildrenLevel}
-            changeValue={(value) =>
-              setCurrentInputParams({ maxTableChildrenLevel: value })
-            }
+            changeValue={(value) => setCurrentInputParams({ maxTableChildrenLevel: value })}
           />
           <BooleanInput
             value={tableWrap}
@@ -200,7 +186,7 @@ export function AutoForm6({
             labelFalse="obj"
             onValueChange={setShowJsonText}
           />
-          {typeof themeId === "undefined" && (
+          {typeof themeId === 'undefined' && (
             <BooleanInput
               value={darkTheme}
               labelTrue="light"
@@ -224,8 +210,7 @@ export function AutoForm6({
 
         <div
           className={
-            "frame1059-auto-form6-menu" +
-            (showMenu ? "" : " frame1059-auto-form6-menu-hide")
+            'frame1059-auto-form6-menu' + (showMenu ? '' : ' frame1059-auto-form6-menu-hide')
           }
         >
           <MenuElementRecursive
@@ -250,8 +235,8 @@ export function AutoForm6({
 
         <div
           className={
-            "frame1059-auto-form6-content" +
-            (showMenu ? "" : " frame1059-auto-form6-content-hide-menu")
+            'frame1059-auto-form6-content' +
+            (showMenu ? '' : ' frame1059-auto-form6-content-hide-menu')
           }
         >
           {showJsonText && <JSONTextView value={autoFormState.pathObject} />}
@@ -259,7 +244,7 @@ export function AutoForm6({
           {!showJsonText && (
             <>
               {!!autoFormState.cards.length && (
-                <div className={"frame1059-auto-form6-content-cards"}>
+                <div className={'frame1059-auto-form6-content-cards'}>
                   {autoFormState.cards.map((card, index) => (
                     <div key={index} className="frame1059-auto-form6-card">
                       {!!card.relativePath.length && (
@@ -292,11 +277,7 @@ export function AutoForm6({
                               value={val}
                               onChangePath={() =>
                                 setCurrentInputParams({
-                                  path: [
-                                    ...autoFormState.currentPath,
-                                    ...card.relativePath,
-                                    key,
-                                  ],
+                                  path: [...autoFormState.currentPath, ...card.relativePath, key],
                                 })
                               }
                               onChangeValue={() => {}}
@@ -308,7 +289,7 @@ export function AutoForm6({
               )}
 
               {!!autoFormState.tables.length && (
-                <div className={"frame1059-auto-form6-content-tables"}>
+                <div className={'frame1059-auto-form6-content-tables'}>
                   {autoFormState.tables.map(
                     (table, index) =>
                       !!table.value.length && (
@@ -323,10 +304,7 @@ export function AutoForm6({
                                     setCurrentInputParams({
                                       path: [
                                         ...autoFormState.currentPath,
-                                        ...table.relativePath.slice(
-                                          0,
-                                          index + 1
-                                        ),
+                                        ...table.relativePath.slice(0, index + 1),
                                       ],
                                     })
                                   }
@@ -339,9 +317,7 @@ export function AutoForm6({
                           <AutoTable
                             inValue={table.value}
                             originalIndex={table.originalIndex}
-                            maxTableChildrenLevel={
-                              autoFormState.maxTableChildrenLevel
-                            }
+                            maxTableChildrenLevel={autoFormState.maxTableChildrenLevel}
                             tableWrap={tableWrap}
                             onChangePath={(path: Path) =>
                               setCurrentInputParams({
@@ -354,7 +330,7 @@ export function AutoForm6({
                             }
                           />
                         </div>
-                      )
+                      ),
                   )}
                 </div>
               )}
@@ -363,5 +339,5 @@ export function AutoForm6({
         </div>
       </div>
     </div>
-  );
+  )
 }

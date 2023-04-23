@@ -5,30 +5,25 @@
 // BooleanInput
 
 type BooleanInputType = {
-  value: boolean;
-  labelTrue?: string;
-  labelFalse?: string;
-  onValueChange?: (value: boolean) => void;
-};
+  value: boolean
+  labelTrue?: string
+  labelFalse?: string
+  onValueChange?: (value: boolean) => void
+}
 
-export function BooleanInput({
-  value,
-  labelTrue,
-  labelFalse,
-  onValueChange,
-}: BooleanInputType) {
+export function BooleanInput({ value, labelTrue, labelFalse, onValueChange }: BooleanInputType) {
   return (
     <div
       className={
-        "frame1059-auto-form6-none-selectable frame1059-auto-form6-card-item-boolean-value frame1059-auto-form6-card-item-boolean-value-small" +
+        'frame1059-auto-form6-none-selectable frame1059-auto-form6-card-item-boolean-value frame1059-auto-form6-card-item-boolean-value-small' +
         (value
-          ? " frame1059-auto-form6-card-item-boolean-value-true"
-          : " frame1059-auto-form6-card-item-boolean-value-false")
+          ? ' frame1059-auto-form6-card-item-boolean-value-true'
+          : ' frame1059-auto-form6-card-item-boolean-value-false')
       }
       onClick={() => onValueChange?.(!value)}
     >
       {/* ✔ ✓ ✕ ✖ ✗ ✘ */}
-      {value ? labelTrue || "✓" : labelFalse || "✗"}
+      {value ? labelTrue || '✓' : labelFalse || '✗'}
     </div>
-  );
+  )
 }
