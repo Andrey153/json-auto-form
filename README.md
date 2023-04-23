@@ -1,5 +1,7 @@
 # json-auto-form
 
+React component to explore (next version will edit) JSON object
+
 # Demo application
 
 preview: https://andrey153.github.io/json-auto-form-demo
