@@ -4,13 +4,13 @@
 
 // ArrayOpenButton
 
-import { JSONArray } from '../../types/JSONTypes'
+import { JSONArray } from '../../types/JSONTypes';
 
 type ArrayOpenButtonType = {
-  label: string
-  val?: JSONArray
-  onClick: (e: any) => void
-}
+  label: string;
+  val?: JSONArray;
+  onClick: (e: any) => void;
+};
 
 export function ArrayOpenButton({ label, onClick }: ArrayOpenButtonType) {
   return (
@@ -18,5 +18,5 @@ export function ArrayOpenButton({ label, onClick }: ArrayOpenButtonType) {
       <div className="frame1059-auto-form6-menu-item-array-label">{label}</div>
       <div className="frame1059-auto-form6-menu-item-array-icon">☰</div>
     </div>
-  )
+  );
 }

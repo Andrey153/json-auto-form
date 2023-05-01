@@ -3,12 +3,12 @@
 // https://github.com/Andrey153/json-auto-form
 
 type LabeledStringInputType = {
-  label: string
-  val: string
-  onValueChange?: (val: string) => void
-}
+  label: string;
+  val: string;
+  onValueChange?: (val: string) => void;
+};
 
-const maxStringLength = 200
+const maxStringLength = 200;
 
 export function LabeledStringInput({ label, val }: LabeledStringInputType) {
   return (
@@ -19,5 +19,5 @@ export function LabeledStringInput({ label, val }: LabeledStringInputType) {
         &nbsp;
       </div>
     </div>
-  )
+  );
 }

@@ -2,29 +2,29 @@
 // Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
 // https://github.com/Andrey153/json-auto-form
 
-import { JSONValue } from '../../types/JSONTypes'
-import { ColumnDescription } from '../../utils/getColumnsDescription'
-import { getJsonType } from '../../utils/getJsonType'
-import { getChildrenObjectByPath } from '../../utils/utils'
-import { coefficientSymbolWidth, paddingInnerElements } from './constants'
+import { JSONValue } from '../../types/JSONTypes';
+import { ColumnDescription } from '../../utils/getColumnsDescription';
+import { getJsonType } from '../../utils/getJsonType';
+import { getChildrenObjectByPath } from '../../utils/utils';
+import { coefficientSymbolWidth, paddingInnerElements } from './constants';
 
-const maxStringLength = 200
+const maxStringLength = 200;
 
 export function AutoTableCell({
   showLabelInRow,
   row,
   column,
 }: {
-  showLabelInRow: boolean
-  row: JSONValue
-  column: ColumnDescription
+  showLabelInRow: boolean;
+  row: JSONValue;
+  column: ColumnDescription;
 }) {
   const value = getChildrenObjectByPath({
     value: row,
     path: column.path,
-  })
+  });
 
-  const typeValue = getJsonType(value)
+  const typeValue = getJsonType(value);
 
   if (column.type === 'JSONNull') {
     return (
@@ -36,11 +36,11 @@ export function AutoTableCell({
           {(typeValue === 'JSONNull' && 'null') || '\u00A0'}
         </div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONString') {
-    const str = value?.toString() || ''
+    const str = value?.toString() || '';
     return (
       <div
         style={{
@@ -59,7 +59,7 @@ export function AutoTableCell({
             '\u00A0'}
         </div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONNumber') {
@@ -77,7 +77,7 @@ export function AutoTableCell({
           {(typeValue === 'JSONNumber' && value?.toString()) || '\u00A0'}
         </div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONBoolean') {
@@ -97,7 +97,7 @@ export function AutoTableCell({
           {typeValue === 'JSONBoolean' ? (value ? '✓' : '✗') : '\u00A0'}
         </div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONArray') {
@@ -110,7 +110,7 @@ export function AutoTableCell({
           {(typeValue === 'JSONArray' && !!value ? '...' : '') || '\u00A0'}
         </div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONObject') {
@@ -123,7 +123,7 @@ export function AutoTableCell({
           {(typeValue === 'JSONObject' && !!value ? '...' : '') || '\u00A0'}
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -133,5 +133,5 @@ export function AutoTableCell({
         Cell type detection error
       </div>
     </div>
-  )
+  );
 }

@@ -3,10 +3,10 @@
 // https://github.com/Andrey153/json-auto-form
 
 type LabeledBooleanInputType = {
-  label: string
-  val: boolean
-  onValueChange?: (val: boolean) => void
-}
+  label: string;
+  val: boolean;
+  onValueChange?: (val: boolean) => void;
+};
 
 export function LabeledBooleanInput({ label, val }: LabeledBooleanInputType) {
   return (
@@ -23,5 +23,5 @@ export function LabeledBooleanInput({ label, val }: LabeledBooleanInputType) {
         {val ? '✓' : '✗'}
       </div>
     </div>
-  )
+  );
 }

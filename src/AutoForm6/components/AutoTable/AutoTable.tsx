@@ -3,22 +3,22 @@
 // https://github.com/Andrey153/json-auto-form
 
 // AutoTable
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-import { Path } from '../../types/autoFormPropsType'
-import { JSONArray, JSONValue } from '../../types/JSONTypes'
-import { ColumnDescription, getColumnsDescription } from '../../utils/getColumnsDescription'
-import { BooleanInput } from '../BooleanInput/BooleanInput'
-import { SetLevel } from '../SetLevel/SetLevel'
-import { AutoTableCell } from './AutoTableCell'
-import { coefficientSymbolWidth, paddingInnerElements, pageSizeCoefficient } from './constants'
+import { Path } from '../../types/autoFormPropsType';
+import { JSONArray, JSONValue } from '../../types/JSONTypes';
+import { ColumnDescription, getColumnsDescription } from '../../utils/getColumnsDescription';
+import { BooleanInput } from '../BooleanInput/BooleanInput';
+import { SetLevel } from '../SetLevel/SetLevel';
+import { AutoTableCell } from './AutoTableCell';
+import { coefficientSymbolWidth, paddingInnerElements, pageSizeCoefficient } from './constants';
 
 interface AutoTableInterface {
-  inValue: JSONArray
-  originalIndex?: number[]
-  maxTableChildrenLevel: number
-  tableWrap: boolean
-  onChangePath: (path: Path) => void
+  inValue: JSONArray;
+  originalIndex?: number[];
+  maxTableChildrenLevel: number;
+  tableWrap: boolean;
+  onChangePath: (path: Path) => void;
 }
 
 export function AutoTable({
@@ -30,18 +30,18 @@ export function AutoTable({
 }: AutoTableInterface) {
   // combine all available columns with types for first level
 
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [showLabelInRow, setShowLabelInRow] = useState(false)
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [showLabelInRow, setShowLabelInRow] = useState(false);
 
-  const columns = getColumnsDescription(inValue, maxTableChildrenLevel)
+  const columns = getColumnsDescription(inValue, maxTableChildrenLevel);
 
-  const startRow = (page - 1) * pageSize
-  const endRow = startRow + pageSize
-  const numberRows = inValue.length
-  const maxPage = Math.ceil(numberRows / pageSize)
+  const startRow = (page - 1) * pageSize;
+  const endRow = startRow + pageSize;
+  const numberRows = inValue.length;
+  const maxPage = Math.ceil(numberRows / pageSize);
 
-  const valuesPage = inValue.slice(startRow, endRow)
+  const valuesPage = inValue.slice(startRow, endRow);
 
   return (
     <div className="frame1059-auto-form6-auto-table">
@@ -58,24 +58,24 @@ export function AutoTable({
         <SetLevel
           value={page}
           changeValue={(val) => {
-            let newVal = val
-            if (val > maxPage) newVal = maxPage
-            if (val < 1) newVal = 1
-            setPage(newVal)
+            let newVal = val;
+            if (val > maxPage) newVal = maxPage;
+            if (val < 1) newVal = 1;
+            setPage(newVal);
           }}
         />
         <SetLevel
           value={pageSize}
           changeValue={(val) => {
-            let newPageSize = (val - pageSize) * pageSizeCoefficient + pageSize
-            if (newPageSize < 1) newPageSize = 1
-            setPageSize(newPageSize)
+            let newPageSize = (val - pageSize) * pageSizeCoefficient + pageSize;
+            if (newPageSize < 1) newPageSize = 1;
+            setPageSize(newPageSize);
 
-            const maxPage = Math.ceil(numberRows / newPageSize)
-            let newVal = page
-            if (newVal > maxPage) newVal = maxPage - 1
-            if (newVal < 1) newVal = 1
-            setPage(newVal)
+            const maxPage = Math.ceil(numberRows / newPageSize);
+            let newVal = page;
+            if (newVal > maxPage) newVal = maxPage - 1;
+            if (newVal < 1) newVal = 1;
+            setPage(newVal);
           }}
         />
         <BooleanInput
@@ -108,7 +108,7 @@ export function AutoTable({
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 function AutoTableRow({
@@ -119,12 +119,12 @@ function AutoTableRow({
   showLabelInRow,
   onChangePath,
 }: {
-  index: number
-  row: JSONValue
-  columns: ColumnDescription[]
-  tableWrap: boolean
-  showLabelInRow: boolean
-  onChangePath: (path: Path) => void
+  index: number;
+  row: JSONValue;
+  columns: ColumnDescription[];
+  tableWrap: boolean;
+  showLabelInRow: boolean;
+  onChangePath: (path: Path) => void;
 }) {
   return (
     <div
@@ -144,7 +144,7 @@ function AutoTableRow({
         <AutoTableCell key={column.id} showLabelInRow={showLabelInRow} row={row} column={column} />
       ))}
     </div>
-  )
+  );
 }
 
 function AutoTableHeader({
@@ -152,8 +152,8 @@ function AutoTableHeader({
   tableWrap,
 }: // onChangePath,
 {
-  tableWrap: boolean
-  columns: ColumnDescription[]
+  tableWrap: boolean;
+  columns: ColumnDescription[];
   // onChangePath: (path: Path) => void;
 }) {
   return (
@@ -172,7 +172,7 @@ function AutoTableHeader({
         <AutoTableCellHeader key={column.id} column={column} />
       ))}
     </div>
-  )
+  );
 }
 
 export function AutoTableCellHeader({ column }: { column: ColumnDescription }) {
@@ -181,7 +181,7 @@ export function AutoTableCellHeader({ column }: { column: ColumnDescription }) {
       <div className="frame1059-auto-form6-auto-table-cell-null">
         <div className="frame1059-auto-form6-auto-table-cell-label-boolean">{column.label}</div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONString') {
@@ -194,7 +194,7 @@ export function AutoTableCellHeader({ column }: { column: ColumnDescription }) {
       >
         <div className="frame1059-auto-form6-auto-table-cell-label">{column.label}</div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONNumber') {
@@ -207,7 +207,7 @@ export function AutoTableCellHeader({ column }: { column: ColumnDescription }) {
       >
         <div className="frame1059-auto-form6-auto-table-cell-label-number">{column.label}</div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONBoolean') {
@@ -215,7 +215,7 @@ export function AutoTableCellHeader({ column }: { column: ColumnDescription }) {
       <div className="frame1059-auto-form6-auto-table-cell-boolean">
         <div className="frame1059-auto-form6-auto-table-cell-label-boolean">{column.label}</div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONArray') {
@@ -223,7 +223,7 @@ export function AutoTableCellHeader({ column }: { column: ColumnDescription }) {
       <div className="frame1059-auto-form6-auto-table-cell">
         <div className="frame1059-auto-form6-auto-table-cell-label">{column.label}</div>
       </div>
-    )
+    );
   }
 
   if (column.type === 'JSONObject') {
@@ -231,12 +231,12 @@ export function AutoTableCellHeader({ column }: { column: ColumnDescription }) {
       <div className="frame1059-auto-form6-auto-table-cell">
         <div className="frame1059-auto-form6-auto-table-cell-label">{column.label}</div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="frame1059-auto-form6-auto-table-cell">
       <div className="frame1059-auto-form6-auto-table-cell-label">Cell type detection error</div>
     </div>
-  )
+  );
 }

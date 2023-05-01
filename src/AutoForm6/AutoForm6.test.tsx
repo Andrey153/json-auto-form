@@ -6,5 +6,5 @@
 describe.skip('AutoForm6', () => {
   test('renders the AutoForm6 component', () => {
     // render(<AutoForm6 inValue={{ a: 1 }} />);
-  })
-})
+  });
+});

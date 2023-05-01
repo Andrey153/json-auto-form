@@ -3,6 +3,6 @@
 // https://github.com/Andrey153/json-auto-form
 
 // const maxNumberOfColumns = 20; // todo
-export const pageSizeCoefficient = 1
-export const coefficientSymbolWidth = 9
-export const paddingInnerElements = 16
+export const pageSizeCoefficient = 1;
+export const coefficientSymbolWidth = 9;
+export const paddingInnerElements = 16;

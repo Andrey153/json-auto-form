@@ -8,14 +8,14 @@
 // contain just props with array if any children elements with substring
 // search by key and value can be optional
 
-import { JSONArray, JSONObject, JSONValue } from '../types/JSONTypes'
-import { getJsonType } from './getJsonType'
-import { isFilteredObjectRecursive } from './isFilteredObjectRecursive'
+import { JSONArray, JSONObject, JSONValue } from '../types/JSONTypes';
+import { getJsonType } from './getJsonType';
+import { isFilteredObjectRecursive } from './isFilteredObjectRecursive';
 
 export type FilteredObjectType = {
-  filteredValue?: JSONValue
-  originalIndex?: JSONObject | JSONArray
-}
+  filteredValue?: JSONValue;
+  originalIndex?: JSONObject | JSONArray;
+};
 
 export function filterObjectBySubstring(
   inValue: JSONObject | JSONArray,
@@ -28,16 +28,16 @@ export function filterObjectBySubstring(
   if (childrenLevel > maxChildrenLevel) {
     console.log(
       'In function isFilteredObjectRecursive achieved maxChildrenLevel = ' + maxChildrenLevel,
-    )
-    return {}
+    );
+    return {};
   }
-  const typeValue = getJsonType(inValue)
+  const typeValue = getJsonType(inValue);
 
   if (typeValue === 'JSONArray') {
-    const filteredValue: JSONArray = []
-    const originalIndex: number[] = []
+    const filteredValue: JSONArray = [];
+    const originalIndex: number[] = [];
 
-    ;(inValue as JSONArray).forEach((value, index) => {
+    (inValue as JSONArray).forEach((value, index) => {
       if (
         isFilteredObjectRecursive(
           value as JSONValue,
@@ -48,23 +48,23 @@ export function filterObjectBySubstring(
           maxChildrenLevel,
         )
       ) {
-        filteredValue.push(value)
-        originalIndex.push(index)
+        filteredValue.push(value);
+        originalIndex.push(index);
       }
-    })
+    });
     return {
       filteredValue,
       originalIndex,
-    }
+    };
   } else if (typeValue === 'JSONObject') {
-    const result: JSONObject = {}
-    const originalIndex: JSONObject = {}
+    const result: JSONObject = {};
+    const originalIndex: JSONObject = {};
     Object.entries(inValue as JSONObject).forEach(([key, val]) => {
       if (keySearch) {
-        if (key.toLowerCase().includes(searchText)) result[key] = val
+        if (key.toLowerCase().includes(searchText)) result[key] = val;
       }
 
-      const typeVal = getJsonType(val)
+      const typeVal = getJsonType(val);
       if (typeVal === 'JSONObject' || typeVal === 'JSONArray') {
         const newObject = filterObjectBySubstring(
           val as JSONObject | JSONArray,
@@ -73,33 +73,33 @@ export function filterObjectBySubstring(
           valueSearch,
           childrenLevel + 1,
           maxChildrenLevel,
-        )
+        );
         if (newObject?.filteredValue && Object.keys(newObject?.filteredValue).length > 0) {
-          result[key] = newObject.filteredValue
-          originalIndex[key] = newObject.originalIndex || []
+          result[key] = newObject.filteredValue;
+          originalIndex[key] = newObject.originalIndex || [];
         }
       }
 
       if (valueSearch) {
         if (typeVal === 'JSONString') {
           if ((val as string).toLowerCase().includes(searchText)) {
-            result[key] = val
+            result[key] = val;
           }
         } else if (typeVal === 'JSONNumber') {
           if (!isNaN(Number(searchText)) && (val as number).toString().includes(searchText)) {
-            result[key] = val
+            result[key] = val;
           }
         } else if (typeVal === 'JSONNull') {
           if (searchText.toLowerCase() === 'null') {
-            result[key] = val
+            result[key] = val;
           }
         }
       }
-    })
+    });
     return {
       filteredValue: result,
       originalIndex,
-    }
+    };
   }
-  return {}
+  return {};
 }

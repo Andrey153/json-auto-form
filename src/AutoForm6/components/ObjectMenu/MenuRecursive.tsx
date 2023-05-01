@@ -2,19 +2,19 @@
 // Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
 // https://github.com/Andrey153/json-auto-form
 
-import { useState } from 'react'
+import { useState } from 'react';
 
-import { Path } from '../../types/autoFormPropsType'
-import { JSONObject, JSONValue } from '../../types/JSONTypes'
-import { getJsonType } from '../../utils/getJsonType'
+import { Path } from '../../types/autoFormPropsType';
+import { JSONObject, JSONValue } from '../../types/JSONTypes';
+import { getJsonType } from '../../utils/getJsonType';
 
 type MenuRecursiveType = {
-  inValue: JSONValue
-  relativePath: Path
-  level: number
-  maxLevel: number
-  setPath: (path: Path) => void
-}
+  inValue: JSONValue;
+  relativePath: Path;
+  level: number;
+  maxLevel: number;
+  setPath: (path: Path) => void;
+};
 
 export function MenuRecursive({
   inValue,
@@ -23,15 +23,15 @@ export function MenuRecursive({
   maxLevel,
   setPath,
 }: MenuRecursiveType) {
-  if (level > maxLevel) return null
-  const typeInValue = getJsonType(inValue)
-  if (typeInValue !== 'JSONObject') return null
+  if (level > maxLevel) return null;
+  const typeInValue = getJsonType(inValue);
+  if (typeInValue !== 'JSONObject') return null;
 
   return (
     <>
       {Object.entries(inValue as JSONObject).map(([key, val]) => {
-        const typeVal = getJsonType(val)
-        const path = [...relativePath, key]
+        const typeVal = getJsonType(val);
+        const path = [...relativePath, key];
         if (typeVal === 'JSONObject') {
           return (
             <div className="frame1059-auto-form6-menu-with-submenu-container" key={key}>
@@ -52,7 +52,7 @@ export function MenuRecursive({
                 />
               </div>
             </div>
-          )
+          );
         }
 
         if (typeVal === 'JSONArray') {
@@ -62,24 +62,24 @@ export function MenuRecursive({
                 {key}...
               </div>
             </div>
-          )
+          );
         }
 
-        return null
+        return null;
       })}
     </>
-  )
+  );
 }
 
 type MenuElementRecursiveType = {
-  inKey: string
-  inValue: JSONValue
-  activePath: Path
-  relativePath: Path
-  level: number
-  maxLevel: number
-  setPath: (path: Path) => void
-}
+  inKey: string;
+  inValue: JSONValue;
+  activePath: Path;
+  relativePath: Path;
+  level: number;
+  maxLevel: number;
+  setPath: (path: Path) => void;
+};
 
 export function MenuElementRecursive({
   inKey,
@@ -90,26 +90,26 @@ export function MenuElementRecursive({
   maxLevel,
   setPath,
 }: MenuElementRecursiveType) {
-  const [unfoldSubMenu, setUnfoldSubMenu] = useState(false)
+  const [unfoldSubMenu, setUnfoldSubMenu] = useState(false);
 
-  if (level > maxLevel) return null
-  const typeInValue = getJsonType(inValue)
-  if (typeInValue !== 'JSONObject') return null
+  if (level > maxLevel) return null;
+  const typeInValue = getJsonType(inValue);
+  if (typeInValue !== 'JSONObject') return null;
 
-  const path = level ? [...relativePath, inKey] : []
+  const path = level ? [...relativePath, inKey] : [];
 
   // make active menu base on path
-  const isActiveItem = !path.find((element, index) => activePath[index] !== element)
+  const isActiveItem = !path.find((element, index) => activePath[index] !== element);
   // const isActiveItem = activePath.toString().startsWith(path.toString());
   // const isActiveItem = false;
 
   // const unfoldSubMenuCheck = !level ? true : isActiveItem || unfoldSubMenu;
-  const unfoldSubMenuCheck = unfoldSubMenu || !level
+  const unfoldSubMenuCheck = unfoldSubMenu || !level;
 
   const isSubItemsPresent = Object.entries(inValue as JSONObject).find(([, val]) => {
-    const typeVal = getJsonType(val)
-    return typeVal === 'JSONArray' || typeVal === 'JSONObject'
-  })
+    const typeVal = getJsonType(val);
+    return typeVal === 'JSONArray' || typeVal === 'JSONObject';
+  });
 
   return (
     <div className="frame1059-auto-form6-menu-with-submenu-container">
@@ -122,7 +122,7 @@ export function MenuElementRecursive({
         }
         onClick={() => {
           // setUnfoldSubMenu(!unfoldSubMenu);
-          setPath(path)
+          setPath(path);
         }}
       >
         <div className="frame1059-auto-form6-menu-item-object-label">
@@ -133,8 +133,8 @@ export function MenuElementRecursive({
           <div
             className="frame1059-auto-form6-menu-item-object-unfold-icon"
             onClick={(e) => {
-              e.stopPropagation()
-              setUnfoldSubMenu(!unfoldSubMenu)
+              e.stopPropagation();
+              setUnfoldSubMenu(!unfoldSubMenu);
             }}
           >
             {unfoldSubMenuCheck ? 'ᐯ' : 'ᐳ'}
@@ -144,7 +144,7 @@ export function MenuElementRecursive({
       {isSubItemsPresent && unfoldSubMenuCheck && (
         <div className="frame1059-auto-form6-menu-submenu">
           {Object.entries(inValue as JSONObject).map(([key, val]) => {
-            const typeVal = getJsonType(val)
+            const typeVal = getJsonType(val);
             if (typeVal === 'JSONObject') {
               return (
                 <MenuElementRecursive
@@ -157,10 +157,10 @@ export function MenuElementRecursive({
                   maxLevel={maxLevel}
                   setPath={setPath}
                 />
-              )
+              );
             }
             if (typeVal === 'JSONArray') {
-              const isActiveArrayItem = activePath.toString().startsWith([...path, key].toString())
+              const isActiveArrayItem = activePath.toString().startsWith([...path, key].toString());
               return (
                 <div
                   className={
@@ -175,22 +175,22 @@ export function MenuElementRecursive({
                   <div className="frame1059-auto-form6-menu-item-array-label">{key}</div>
                   <div className="frame1059-auto-form6-menu-item-array-icon">☰</div>
                 </div>
-              )
+              );
             }
 
-            return null
+            return null;
           })}
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function getLevelClass(level: number): string {
-  if (level === 0) return 'frame1059-auto-form6-menu-item-object-level-0'
-  if (level === 1) return 'frame1059-auto-form6-menu-item-object-level-1'
-  if (level === 2) return 'frame1059-auto-form6-menu-item-object-level-2'
-  if (level === 3) return 'frame1059-auto-form6-menu-item-object-level-3'
-  if (level === 4) return 'frame1059-auto-form6-menu-item-object-level-4'
-  return 'frame1059-auto-form6-menu-item-object-level-5'
+  if (level === 0) return 'frame1059-auto-form6-menu-item-object-level-0';
+  if (level === 1) return 'frame1059-auto-form6-menu-item-object-level-1';
+  if (level === 2) return 'frame1059-auto-form6-menu-item-object-level-2';
+  if (level === 3) return 'frame1059-auto-form6-menu-item-object-level-3';
+  if (level === 4) return 'frame1059-auto-form6-menu-item-object-level-4';
+  return 'frame1059-auto-form6-menu-item-object-level-5';
 }

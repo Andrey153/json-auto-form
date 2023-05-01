@@ -3,10 +3,10 @@
 // https://github.com/Andrey153/json-auto-form
 
 type LabeledNullInputType = {
-  label: string
-  val?: null
-  onValueChange?: (val: number) => void
-}
+  label: string;
+  val?: null;
+  onValueChange?: (val: number) => void;
+};
 
 export function LabeledNullInput({ label }: LabeledNullInputType) {
   return (
@@ -14,5 +14,5 @@ export function LabeledNullInput({ label }: LabeledNullInputType) {
       <div className="frame1059-auto-form6-card-item-number-label">{label}</div>
       <div className="frame1059-auto-form6-card-item-number-value">null</div>
     </div>
-  )
+  );
 }

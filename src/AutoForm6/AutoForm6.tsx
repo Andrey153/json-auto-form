@@ -2,44 +2,44 @@
 // Copyright (c) 2023 Andrey Vyalkov vyalkov.a@gmail.com
 // https://github.com/Andrey153/json-auto-form
 
-import './autoForm6.css'
-import './autoForm6-defaultDarkF1059AF6.css'
+import './autoForm6.css';
+import './autoForm6-defaultDarkF1059AF6.css';
 
-import React, { CSSProperties, useEffect, useState } from 'react'
+import React, { CSSProperties, useEffect, useState } from 'react';
 
-import { AutoTable } from './components/AutoTable/AutoTable'
-import { AutoTypeInput } from './components/AutoTypeInput/AutoTypeInput'
-import { BooleanInput } from './components/BooleanInput/BooleanInput'
-import { JSONTextView } from './components/JSONTextView/JSONTextView'
-import { MenuElementRecursive } from './components/ObjectMenu/MenuRecursive'
-import { SetLevel } from './components/SetLevel/SetLevel'
-import { AutoFormState, Path } from './types/autoFormPropsType'
-import { JSONObject, JSONValue } from './types/JSONTypes'
-import { isPrimitive } from './utils/isPrimitive'
-import { getAutoFormState } from './utils/utils'
+import { AutoTable } from './components/AutoTable/AutoTable';
+import { AutoTypeInput } from './components/AutoTypeInput/AutoTypeInput';
+import { BooleanInput } from './components/BooleanInput/BooleanInput';
+import { JSONTextView } from './components/JSONTextView/JSONTextView';
+import { MenuElementRecursive } from './components/ObjectMenu/MenuRecursive';
+import { SetLevel } from './components/SetLevel/SetLevel';
+import { AutoFormState, Path } from './types/autoFormPropsType';
+import { JSONObject, JSONValue } from './types/JSONTypes';
+import { isPrimitive } from './utils/isPrimitive';
+import { getAutoFormState } from './utils/utils';
 
 export interface AutoForm6Interface {
-  inValue: JSONValue
-  path?: Path
-  style?: CSSProperties
-  themeId?: string // if not defined used default with dark/light switcher,
+  inValue: JSONValue;
+  path?: Path;
+  style?: CSSProperties;
+  themeId?: string; // if not defined used default with dark/light switcher,
   //if provided then switcher hided and dark/light mode switch must be implemented in parent application
   //id "" and "defaultDarkF1059AF6" used for default theme
 }
 
 export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface) {
-  let value = inValue as JSONObject
+  let value = inValue as JSONObject;
   if (isPrimitive(typeof value)) {
-    value = { value: inValue }
+    value = { value: inValue };
   }
 
-  const [fullScreen, setFullScreen] = useState(false)
-  const [showMenu, setShowMenu] = useState(true)
-  const [tableWrap, setTableWrap] = useState(false)
+  const [fullScreen, setFullScreen] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
+  const [tableWrap, setTableWrap] = useState(false);
 
-  const [darkTheme, setDarkTheme] = useState(true)
+  const [darkTheme, setDarkTheme] = useState(true);
 
-  const [showJsonText, setShowJsonText] = useState(false)
+  const [showJsonText, setShowJsonText] = useState(false);
 
   const [autoFormState, setAutoFormState] = useState<AutoFormState>({
     currentPath: path || [],
@@ -54,7 +54,7 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
     },
     cards: [],
     tables: [],
-  })
+  });
 
   useEffect(() => {
     const newState = getAutoFormState(
@@ -65,9 +65,9 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
       autoFormState.valueSearch,
       autoFormState.childrenNodeLevel,
       autoFormState.maxTableChildrenLevel,
-    )
-    setAutoFormState(newState)
-  }, [value])
+    );
+    setAutoFormState(newState);
+  }, [value]);
 
   // const searchFilter = createSearchFilter(inValue, searchText);
 
@@ -79,12 +79,12 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
     childrenNodeLevel,
     maxTableChildrenLevel,
   }: {
-    path?: Path
-    searchText?: string
-    keySearch?: boolean
-    valueSearch?: boolean
-    childrenNodeLevel?: number
-    maxTableChildrenLevel?: number
+    path?: Path;
+    searchText?: string;
+    keySearch?: boolean;
+    valueSearch?: boolean;
+    childrenNodeLevel?: number;
+    maxTableChildrenLevel?: number;
   }) {
     const newState = getAutoFormState(
       value as JSONObject,
@@ -96,8 +96,8 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
       maxTableChildrenLevel === undefined
         ? autoFormState.maxTableChildrenLevel
         : maxTableChildrenLevel,
-    )
-    setAutoFormState(newState)
+    );
+    setAutoFormState(newState);
   }
 
   return (
@@ -148,7 +148,7 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
             className="frame1059-auto-form6-search-input"
             value={autoFormState.searchText}
             onChange={(e) => {
-              setCurrentInputParams({ searchText: e.target.value })
+              setCurrentInputParams({ searchText: e.target.value });
             }}
           />
           <BooleanInput
@@ -339,5 +339,5 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
         </div>
       </div>
     </div>
-  )
+  );
 }

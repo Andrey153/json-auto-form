@@ -5,11 +5,11 @@
 // BooleanInput
 
 type BooleanInputType = {
-  value: boolean
-  labelTrue?: string
-  labelFalse?: string
-  onValueChange?: (value: boolean) => void
-}
+  value: boolean;
+  labelTrue?: string;
+  labelFalse?: string;
+  onValueChange?: (value: boolean) => void;
+};
 
 export function BooleanInput({ value, labelTrue, labelFalse, onValueChange }: BooleanInputType) {
   return (
@@ -25,5 +25,5 @@ export function BooleanInput({ value, labelTrue, labelFalse, onValueChange }: Bo
       {/* ✔ ✓ ✕ ✖ ✗ ✘ */}
       {value ? labelTrue || '✓' : labelFalse || '✗'}
     </div>
-  )
+  );
 }

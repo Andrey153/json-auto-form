@@ -3,13 +3,13 @@
 // https://github.com/Andrey153/json-auto-form
 
 export function getJsonType(inValue: any) {
-  if (inValue === null) return 'JSONNull'
-  if (Array.isArray(inValue)) return 'JSONArray'
+  if (inValue === null) return 'JSONNull';
+  if (Array.isArray(inValue)) return 'JSONArray';
 
-  const typeValue = typeof inValue
-  if (typeValue === 'string') return 'JSONString'
-  if (typeValue === 'number') return 'JSONNumber'
-  if (typeValue === 'object') return 'JSONObject'
-  if (typeValue === 'boolean') return 'JSONBoolean'
-  return undefined // or function don't convert to JSON
+  const typeValue = typeof inValue;
+  if (typeValue === 'string') return 'JSONString';
+  if (typeValue === 'number') return 'JSONNumber';
+  if (typeValue === 'object') return 'JSONObject';
+  if (typeValue === 'boolean') return 'JSONBoolean';
+  return undefined; // or function don't convert to JSON
 }
