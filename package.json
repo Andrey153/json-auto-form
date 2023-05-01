@@ -1,6 +1,6 @@
 {
   "name": "json-auto-form",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React component to explore (next version will edit) JSON object",
   "author": "Andrey Vyalkov vyalkov.a@gmail.com",
   "license": "MIT",

@@ -95,13 +95,7 @@ export function getAutoFormState(
   }
 
   const newState: AutoFormState = {
-    currentPath,
     pathObject,
-    searchText,
-    keySearch,
-    valueSearch,
-    childrenNodeLevel,
-    maxTableChildrenLevel,
     currentMenu,
     cards,
     tables,

@@ -6,15 +6,27 @@ import { JSONArray, JSONObject, JSONValue } from './JSONTypes';
 
 export type Path = (string | number)[];
 
-export type AutoFormState = {
+export type AutoForm6StateType = {
+  readFromStorage: boolean;
+  errorReadFromStorage: boolean;
+
+  fullScreen: boolean;
+  showMenu: boolean;
+  darkTheme: boolean;
+  showJsonText: boolean;
+  tableWrap: boolean;
+
   currentPath: Path;
-  pathObject?: JSONValue;
-  currentMenu: CurrentMenu;
   searchText: string;
-  keySearch: boolean;
-  valueSearch: boolean;
+  keySearch: true;
+  valueSearch: true;
   childrenNodeLevel: number;
   maxTableChildrenLevel: number;
+};
+
+export type AutoFormState = {
+  pathObject?: JSONValue;
+  currentMenu: CurrentMenu;
   cards: Card[];
   tables: Table[];
 };

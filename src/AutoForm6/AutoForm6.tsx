@@ -13,8 +13,9 @@ import { BooleanInput } from './components/BooleanInput/BooleanInput';
 import { JSONTextView } from './components/JSONTextView/JSONTextView';
 import { MenuElementRecursive } from './components/ObjectMenu/MenuRecursive';
 import { SetLevel } from './components/SetLevel/SetLevel';
-import { AutoFormState, Path } from './types/autoFormPropsType';
+import { AutoForm6StateType, AutoFormState, Path } from './types/autoFormPropsType';
 import { JSONObject, JSONValue } from './types/JSONTypes';
+import { useIndexedDBStore } from './useIndexedDBStore';
 import { isPrimitive } from './utils/isPrimitive';
 import { getAutoFormState } from './utils/utils';
 
@@ -33,21 +34,30 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
     value = { value: inValue };
   }
 
-  const [fullScreen, setFullScreen] = useState(false);
-  const [showMenu, setShowMenu] = useState(true);
-  const [tableWrap, setTableWrap] = useState(false);
+  const [formState, changeFormState] = useIndexedDBStore<AutoForm6StateType>({
+    dbName: 'json-auto-form',
+    storeName: 'form-state',
+    key: 'currentState',
+    initialState: {
+      readFromStorage: false,
+      errorReadFromStorage: false,
 
-  const [darkTheme, setDarkTheme] = useState(true);
+      fullScreen: false,
+      showMenu: true,
+      darkTheme: true,
+      showJsonText: false,
+      tableWrap: false,
 
-  const [showJsonText, setShowJsonText] = useState(false);
+      currentPath: path || [],
+      searchText: '',
+      keySearch: true,
+      valueSearch: true,
+      childrenNodeLevel: 2,
+      maxTableChildrenLevel: 2,
+    },
+  });
 
   const [autoFormState, setAutoFormState] = useState<AutoFormState>({
-    currentPath: path || [],
-    searchText: '',
-    keySearch: true,
-    valueSearch: true,
-    childrenNodeLevel: 2,
-    maxTableChildrenLevel: 2,
     currentMenu: {
       objKeys: [],
       arrayKeys: [],
@@ -59,54 +69,38 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
   useEffect(() => {
     const newState = getAutoFormState(
       value as JSONObject,
-      [],
-      autoFormState.searchText,
-      autoFormState.keySearch,
-      autoFormState.valueSearch,
-      autoFormState.childrenNodeLevel,
-      autoFormState.maxTableChildrenLevel,
+      formState.currentPath,
+      formState.searchText,
+      formState.keySearch,
+      formState.valueSearch,
+      formState.childrenNodeLevel,
+      formState.maxTableChildrenLevel,
     );
     setAutoFormState(newState);
-  }, [value]);
+  }, [value, formState]);
 
   // const searchFilter = createSearchFilter(inValue, searchText);
 
-  function setCurrentInputParams({
-    path,
-    searchText,
-    keySearch,
-    valueSearch,
-    childrenNodeLevel,
-    maxTableChildrenLevel,
-  }: {
-    path?: Path;
+  function setCurrentInputParams(params: {
+    currentPath?: Path;
     searchText?: string;
     keySearch?: boolean;
     valueSearch?: boolean;
     childrenNodeLevel?: number;
     maxTableChildrenLevel?: number;
   }) {
-    const newState = getAutoFormState(
-      value as JSONObject,
-      path === undefined ? autoFormState.currentPath : path,
-      searchText === undefined ? autoFormState.searchText : searchText,
-      keySearch === undefined ? autoFormState.keySearch : keySearch,
-      valueSearch === undefined ? autoFormState.valueSearch : valueSearch,
-      childrenNodeLevel === undefined ? autoFormState.childrenNodeLevel : childrenNodeLevel,
-      maxTableChildrenLevel === undefined
-        ? autoFormState.maxTableChildrenLevel
-        : maxTableChildrenLevel,
-    );
-    setAutoFormState(newState);
+    changeFormState(params as AutoForm6StateType); // todo
   }
+
+  if (!formState.readFromStorage && !formState.errorReadFromStorage) return null;
 
   return (
     <div
       style={style}
       className={
-        (themeId ? themeId + ' ' : darkTheme ? 'defaultDarkF1059AF6 ' : '') +
+        (themeId ? themeId + ' ' : formState.darkTheme ? 'defaultDarkF1059AF6 ' : '') +
         'frame1059-auto-form6-root' +
-        (fullScreen ? ' frame1059-auto-form6-root-full-screen' : '')
+        (formState.fullScreen ? ' frame1059-auto-form6-root-full-screen' : '')
       }
     >
       {/* = */}
@@ -117,7 +111,7 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
         <div className="frame1059-auto-form6-header-path">
           <div
             className="frame1059-auto-form6-header-menu-item"
-            onClick={() => setShowMenu(!showMenu)}
+            onClick={() => changeFormState({ showMenu: !formState.showMenu })}
           >
             ☰ Menu
           </div>
@@ -125,17 +119,17 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
           <div
             className="frame1059-auto-form6-header-path-item"
             key={'root'}
-            onClick={() => setCurrentInputParams({ path: [] })}
+            onClick={() => setCurrentInputParams({ currentPath: [] })}
           >
             ...
           </div>
-          {autoFormState?.currentPath.map((key, index) => (
+          {formState?.currentPath.map((key, index) => (
             <div
               className="frame1059-auto-form6-header-path-item"
               key={index}
               onClick={() =>
                 setCurrentInputParams({
-                  path: autoFormState.currentPath.slice(0, index + 1),
+                  currentPath: formState.currentPath.slice(0, index + 1),
                 })
               }
             >
@@ -146,59 +140,59 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
         <div className="frame1059-auto-form6-header-right-menu">
           <input
             className="frame1059-auto-form6-search-input"
-            value={autoFormState.searchText}
+            value={formState.searchText}
             onChange={(e) => {
               setCurrentInputParams({ searchText: e.target.value });
             }}
           />
           <BooleanInput
-            value={autoFormState.keySearch}
+            value={formState.keySearch}
             labelTrue="key"
             labelFalse="key"
             onValueChange={(value) => setCurrentInputParams({ keySearch: value })}
           />
           <BooleanInput
-            value={autoFormState.valueSearch}
+            value={formState.valueSearch}
             labelTrue="val"
             labelFalse="val"
             onValueChange={(value) => setCurrentInputParams({ valueSearch: value })}
           />
 
           <SetLevel
-            value={autoFormState.childrenNodeLevel}
+            value={formState.childrenNodeLevel}
             changeValue={(value) => setCurrentInputParams({ childrenNodeLevel: value })}
           />
           <SetLevel
-            value={autoFormState.maxTableChildrenLevel}
+            value={formState.maxTableChildrenLevel}
             changeValue={(value) => setCurrentInputParams({ maxTableChildrenLevel: value })}
           />
           <BooleanInput
-            value={tableWrap}
+            value={formState.tableWrap}
             labelTrue="⮨"
             // ↩ ⮨
             labelFalse="➨"
             // → ↦ ➨
-            onValueChange={setTableWrap}
+            onValueChange={(tableWrap) => changeFormState({ tableWrap })}
           />
           <BooleanInput
-            value={showJsonText}
+            value={formState.showJsonText}
             labelTrue="txt"
             labelFalse="obj"
-            onValueChange={setShowJsonText}
+            onValueChange={(showJsonText) => changeFormState({ showJsonText })}
           />
           {typeof themeId === 'undefined' && (
             <BooleanInput
-              value={darkTheme}
+              value={formState.darkTheme}
               labelTrue="light"
               labelFalse="dark"
-              onValueChange={setDarkTheme}
+              onValueChange={(darkTheme) => changeFormState({ darkTheme })}
             />
           )}
           <BooleanInput
-            value={fullScreen}
+            value={formState.fullScreen}
             labelTrue="⇲"
             labelFalse="⇱"
-            onValueChange={setFullScreen}
+            onValueChange={(fullScreen) => changeFormState({ fullScreen })}
           />
         </div>
       </div>
@@ -210,20 +204,21 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
 
         <div
           className={
-            'frame1059-auto-form6-menu' + (showMenu ? '' : ' frame1059-auto-form6-menu-hide')
+            'frame1059-auto-form6-menu' +
+            (formState.showMenu ? '' : ' frame1059-auto-form6-menu-hide')
           }
         >
           <MenuElementRecursive
             inKey=""
             inValue={inValue}
-            activePath={autoFormState.currentPath}
+            activePath={formState.currentPath}
             relativePath={[]}
             level={0}
             // maxLevel={autoFormState.childrenNodeLevel}
-            maxLevel={6}
-            setPath={(path) =>
+            maxLevel={99}
+            setPath={(currentPath) =>
               setCurrentInputParams({
-                path,
+                currentPath,
               })
             }
           />
@@ -236,12 +231,12 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
         <div
           className={
             'frame1059-auto-form6-content' +
-            (showMenu ? '' : ' frame1059-auto-form6-content-hide-menu')
+            (formState.showMenu ? '' : ' frame1059-auto-form6-content-hide-menu')
           }
         >
-          {showJsonText && <JSONTextView value={autoFormState.pathObject} />}
+          {formState.showJsonText && <JSONTextView value={autoFormState.pathObject} />}
 
-          {!showJsonText && (
+          {!formState.showJsonText && (
             <>
               {!!autoFormState.cards.length && (
                 <div className={'frame1059-auto-form6-content-cards'}>
@@ -255,8 +250,8 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
                               key={index}
                               onClick={() =>
                                 setCurrentInputParams({
-                                  path: [
-                                    ...autoFormState.currentPath,
+                                  currentPath: [
+                                    ...formState.currentPath,
                                     ...card.relativePath.slice(0, index + 1),
                                   ],
                                 })
@@ -277,7 +272,11 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
                               value={val}
                               onChangePath={() =>
                                 setCurrentInputParams({
-                                  path: [...autoFormState.currentPath, ...card.relativePath, key],
+                                  currentPath: [
+                                    ...formState.currentPath,
+                                    ...card.relativePath,
+                                    key,
+                                  ],
                                 })
                               }
                               onChangeValue={() => {}}
@@ -302,8 +301,8 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
                                   key={index}
                                   onClick={() =>
                                     setCurrentInputParams({
-                                      path: [
-                                        ...autoFormState.currentPath,
+                                      currentPath: [
+                                        ...formState.currentPath,
                                         ...table.relativePath.slice(0, index + 1),
                                       ],
                                     })
@@ -317,12 +316,12 @@ export function AutoForm6({ inValue, path, style, themeId }: AutoForm6Interface)
                           <AutoTable
                             inValue={table.value}
                             originalIndex={table.originalIndex}
-                            maxTableChildrenLevel={autoFormState.maxTableChildrenLevel}
-                            tableWrap={tableWrap}
+                            maxTableChildrenLevel={formState.maxTableChildrenLevel}
+                            tableWrap={formState.tableWrap}
                             onChangePath={(path: Path) =>
                               setCurrentInputParams({
-                                path: [
-                                  ...autoFormState.currentPath,
+                                currentPath: [
+                                  ...formState.currentPath,
                                   ...table.relativePath,
                                   ...path,
                                 ],
